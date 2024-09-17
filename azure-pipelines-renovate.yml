@@ -1,0 +1,62 @@
+schedules:
+  
+  # mm HH DD MM DW
+  # Time zone UTC, DW = days of week, 0 = sunday
+  - cron: '*/5 7-14 * * 1'
+    displayName: 'Monday'
+    branches:
+      include: [main]
+    always: true
+  - cron: '*/5 7-14 * * 2'
+    displayName: 'Tuesday'
+    branches:
+      include: [main]
+    always: true
+  - cron: '*/5 7-14 * * 3'
+    displayName: 'Wednesday'
+    branches:
+      include: [main]
+    always: true
+  - cron: '*/5 7-14 * * 4'
+    displayName: 'Thursday'
+    branches:
+      include: [main]
+    always: true
+  - cron: '*/5 7-14 * * 5'
+    displayName: 'Friday'
+    branches:
+      include: [main]
+    always: true
+
+trigger: none
+
+pool:
+  name: Default
+
+steps:
+  - task: NuGetToolInstaller@1
+    displayName: 'Use NuGet 6.8'
+    inputs:
+      versionSpec: 6.8
+
+  - task: NuGetAuthenticate@1
+    displayName: 'NuGet Authenticate'
+    inputs:
+      forceReinstallCredentialProvider: true
+
+  - task: UseNode@1
+    inputs:
+      version: '20.x'
+
+  - powershell: |
+      Write-Host $(System.CollectionUri)
+      git config --global user.email 'kishoreuriti@gmail.com'
+      git config --global user.name 'Kishore Uriti (Renovate Bot)'
+      npx renovate@37.412.2
+    env:
+      RENOVATE_PLATFORM: azure
+      RENOVATE_ENDPOINT: $(System.CollectionUri)
+      RENOVATE_TOKEN: $(System.AccessToken)
+      RENOVATE_BASE_DIR: $(Agent.TempDirectory)
+      VSS_NUGET_ACCESSTOKEN: $(VSS_NUGET_ACCESSTOKEN)
+      LOG_LEVEL: debug
