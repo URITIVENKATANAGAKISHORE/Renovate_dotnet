@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "<ORG>.<PRJ>.Model.*.onnx"
+      ],
+      "assignees": [
+        "<EMAIL>"
+      ]
+    },
+    {
+      "matchPackagePatterns": "OpenCvSharp*",
+      "groupName": "OpenCvSharp*"
+    },
+    {
+      "matchPackagePatterns": "Microsoft.Build*",
+      "groupName": "Microsoft.Build.*"
+    },
+    {
+      "matchPackagePatterns": "Caliburn.Micro*",
+      "groupName": "Caliburn.Micro.*",
+      "enabled": false
+    }
+  ]
+}
